@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDK测试Demo - 1080*1920分辨率登录界面</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        .light-glass-effect {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        .log-panel {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        
+        .custom-input {
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+        
+        .custom-input:focus {
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.3s forwards;
+        }
+        
+        .log-item {
+            animation: fadeIn 0.3s forwards;
+        }
+        
+        /* 自定义滚动条 */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* 登录方式卡片效果 */
+        .login-method-card {
+            transition: all 0.2s ease;
+        }
+        
+        .login-method-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(59, 130, 246, 0.15);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+        
+        .login-method-card.selected {
+            border-color: #3B82F6;
+            background-color: rgba(239, 246, 255, 0.7);
+        }
+        
+        /* 滑入动画 */
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .slide-in {
+            animation: slideInRight 0.4s forwards;
+        }
+        
+        /* 特定设备尺寸 */
+        .phone-mock {
+            width: 1080px;
+            height: 1920px;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 min-h-screen">
+    <div class="container mx-auto py-8 flex justify-center">
+        <div class="flex space-x-16">
+            <!-- 登录选择界面 - 1080*1920分辨率 -->
+            <div class="phone-mock bg-gradient-to-br from-slate-50 to-blue-50 rounded-3xl overflow-hidden relative flex flex-col shadow-2xl border-8 border-slate-300">
+                <!-- 紧凑顶部导航栏 - 高度调整为屏幕的3.5% -->
+                <div class="light-glass-effect w-full px-8 py-3 border-b border-slate-200 flex justify-between items-center" style="height: 67px;">
+                    <div class="flex items-center space-x-4">
+                        <img src="https://unpkg.com/lucide-static@latest/icons/log-in.svg" class="w-8 h-8 text-blue-600">
+                        <h1 class="text-2xl font-bold text-slate-800">登录功能测试</h1>
+                    </div>
+                    <div class="text-lg text-slate-500">v1.0.0</div>
+                </div>
+                
+                <!-- 主要内容区 - 占据屏幕的79% -->
+                <div class="flex-1 flex flex-col p-6 space-y-6 overflow-y-auto" style="height: 1516px;">
+                    <!-- 登录方式选择 -->
+                    <div class="glass-effect rounded-2xl p-8 space-y-6 shadow-md mx-4">
+                        <!-- 提示信息 -->
+                        <div class="bg-blue-50 rounded-xl p-6 flex items-start space-x-4">
+                            <img src="https://unpkg.com/lucide-static@latest/icons/info.svg" class="w-8 h-8 text-blue-500 mt-1">
+                            <div>
+                                <p class="text-xl text-slate-700">请选择登录方式进行登录测试</p>
+                                <p class="text-lg text-slate-500 mt-2">登录后可测试分享、支付等功能</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 登录状态 -->
+                        <div class="bg-red-50 rounded-xl p-5 flex items-center space-x-4">
+                            <img src="https://unpkg.com/lucide-static@latest/icons/alert-circle.svg" class="w-8 h-8 text-red-500">
+                            <span class="text-xl text-red-600 font-medium">当前未登录</span>
+                        </div>
+                        
+                        <!-- 登录方式 -->
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <label class="text-xl font-medium text-slate-700">可用登录方式</label>
+                                <span class="text-lg text-blue-600">4种</span>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-5">
+                                <!-- 手机号登录 -->
+                                <div class="login-method-card selected bg-white border-2 border-blue-300 rounded-xl p-6 cursor-pointer">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
+                                            <img src="https://unpkg.com/lucide-static@latest/icons/smartphone.svg" class="w-6 h-6 text-blue-600">
+                                        </div>
+                                        <span class="text-xl font-medium text-slate-800">手机号登录</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- 邮箱登录 -->
+                                <div class="login-method-card bg-white border-2 border-slate-200 rounded-xl p-6 cursor-pointer">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center">
+                                            <img src="https://unpkg.com/lucide-static@latest/icons/mail.svg" class="w-6 h-6 text-slate-600">
+                                        </div>
+                                        <span class="text-xl font-medium text-slate-800">邮箱登录</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- 华为账号登录 -->
+                                <div class="login-method-card bg-white border-2 border-slate-200 rounded-xl p-6 cursor-pointer">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center">
+                                            <img src="https://unpkg.com/lucide-static@latest/icons/layout-dashboard.svg" class="w-6 h-6 text-slate-600">
+                                        </div>
+                                        <span class="text-xl font-medium text-slate-800">华为账号</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- 游客登录 -->
+                                <div class="login-method-card bg-white border-2 border-slate-200 rounded-xl p-6 cursor-pointer">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center">
+                                            <img src="https://unpkg.com/lucide-static@latest/icons/user.svg" class="w-6 h-6 text-slate-600">
+                                        </div>
+                                        <span class="text-xl font-medium text-slate-800">游客登录</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 进入登录按钮 -->
+                        <button class="w-full bg-blue-500 hover:bg-blue-600 text-white text-xl font-medium rounded-xl py-4 transition shadow-md">
+                            进入手机号登录
+                        </button>
+                    </div>
+                    
+                    <!-- 功能状态 -->
+                    <div class="glass-effect rounded-2xl p-8 space-y-6 shadow-md mx-4">
+                        <div class="text-xl font-medium text-slate-700">功能状态</div>
+                        
+                        <div class="space-y-4">
+                            <!-- 分享功能 -->
+                            <div class="bg-slate-100 rounded-xl p-5 flex items-center justify-between">
+                                <div class="flex items-center space-x-4">
+                                    <img src="https://unpkg.com/lucide-static@latest/icons/share.svg" class="w-7 h-7 text-slate-400">
+                                    <span class="text-xl text-slate-500">分享功能</span>
+                                </div>
+                                <div class="text-lg bg-slate-200 text-slate-500 px-4 py-1.5 rounded-lg">未登录</div>
+                            </div>
+                            
+                            <!-- 支付功能 -->
+                            <div class="bg-slate-100 rounded-xl p-5 flex items-center justify-between">
+                                <div class="flex items-center space-x-4">
+                                    <img src="https://unpkg.com/lucide-static@latest/icons/credit-card.svg" class="w-7 h-7 text-slate-400">
+                                    <span class="text-xl text-slate-500">支付功能</span>
+                                </div>
+                                <div class="text-lg bg-slate-200 text-slate-500 px-4 py-1.5 rounded-lg">未登录</div>
+                            </div>
+                            
+                            <!-- 打点功能 -->
+                            <div class="bg-slate-100 rounded-xl p-5 flex items-center justify-between">
+                                <div class="flex items-center space-x-4">
+                                    <img src="https://unpkg.com/lucide-static@latest/icons/bar-chart.svg" class="w-7 h-7 text-slate-400">
+                                    <span class="text-xl text-slate-500">打点功能</span>
+                                </div>
+                                <div class="text-lg bg-slate-200 text-slate-500 px-4 py-1.5 rounded-lg">未登录</div>
+                            </div>
+                            
+                            <!-- 广告功能 -->
+                            <div class="bg-slate-100 rounded-xl p-5 flex items-center justify-between">
+                                <div class="flex items-center space-x-4">
+                                    <img src="https://unpkg.com/lucide-static@latest/icons/layout.svg" class="w-7 h-7 text-slate-400">
+                                    <span class="text-xl text-slate-500">广告功能</span>
+                                </div>
+                                <div class="text-lg bg-slate-200 text-slate-500 px-4 py-1.5 rounded-lg">未登录</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 精简日志区域 - 高度占屏幕的17.5% -->
+                <div class="log-panel w-full rounded-t-3xl overflow-y-auto p-6 custom-scrollbar" style="height: 336px;">
+                    <div class="log-item text-green-400 text-lg">[10:35:02] [INFO] 初始化完成，等待用户登录</div>
+                    <div class="log-item text-green-400 text-lg" style="animation-delay: 0.1s;">[10:35:03] [INFO] 检测可用登录方式: 手机号, 邮箱, 华为账号, 游客登录</div>
+                    <div class="log-item text-green-400 text-lg" style="animation-delay: 0.2s;">[10:35:04] [INFO] SDK登录模块加载完成</div>
+                    <div class="log-item text-green-400 text-lg" style="animation-delay: 0.3s;">[10:35:05] [INFO] 渠道登录接口配置完成</div>
+                    <div class="log-item text-yellow-400 text-lg" style="animation-delay: 0.4s;">[10:35:06] [WARN] 用户未登录，部分功能不可用</div>
+                    <div class="log-item text-green-400 text-lg" style="animation-delay: 0.5s;">[10:35:07] [INFO] 等待用户选择登录方式...</div>
+                </div>
+                
+                <!-- 尺寸标注 - 在实际应用中可以移除 -->
+                <div class="absolute top-2 left-2 bg-black/70 text-white px-3 py-1.5 rounded-lg text-sm font-mono">
+                    1080 × 1920
+                </div>
+            </div>
+            
+            <!-- 手机号登录界面 - 1080*1920分辨率 -->
+            <div class="phone-mock bg-gradient-to-br from-slate-50 to-blue-50 rounded-3xl overflow-hidden relative flex flex-col shadow-2xl border-8 border-slate-300">
+                <!-- 紧凑顶部导航栏 - 高度调整为屏幕的3.5% -->
+                <div class="light-glass-effect w-full px-8 py-3 border-b border-slate-200 flex justify-between items-center" style="height: 67px;">
+                    <div class="flex items-center space-x-4">
+                        <img src="https://unpkg.com/lucide-static@latest/icons/smartphone.svg" class="w-8 h-8 text-blue-600">
+                        <h1 class="text-2xl font-bold text-slate-800">手机号登录</h1>
+                    </div>
+                    <button class="text-lg text-slate-500 flex items-center space-x-2">
+                        <img src="https://unpkg.com/lucide-static@latest/icons/arrow-left.svg" class="w-6 h-6 text-slate-500">
+                        <span>返回</span>
+                    </button>
+                </div>
+                
+                <!-- 主要内容区 - 占据屏幕的79% -->
+                <div class="flex-1 flex flex-col p-6 space-y-6 overflow-y-auto" style="height: 1516px;">
+                    <!-- 登录表单 -->
+                    <div class="glass-effect rounded-2xl p-8 space-y-6 shadow-md mx-4">
+                        <!-- 手机号输入 -->
+                        <div class="space-y-3">
+                            <label class="text-xl font-medium text-slate-700">手机号</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+                                    <img src="https://unpkg.com/lucide-static@latest/icons/smartphone.svg" class="w-7 h-7 text-slate-500">
+                                </div>
+                                <input type="tel" class="custom-input w-full bg-white border-2 border-slate-200 rounded-xl py-4 pl-16 pr-5 text-lg focus:outline-none focus:border-blue-500" placeholder="请输入手机号" value="138****6666">
+                            </div>
+                        </div>
+                        
+                        <!-- 验证码输入 -->
+                        <div class="space-y-3">
+                            <label class="text-xl font-medium text-slate-700">验证码</label>
+                            <div class="flex space-x-4">
+                                <div class="relative flex-1">
+                                    <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+                                        <img src="https://unpkg.com/lucide-static@latest/icons/key.svg" class="w-7 h-7 text-slate-500">
+                                    </div>
+                                    <input type="text" class="custom-input w-full bg-white border-2 border-slate-200 rounded-xl py-4 pl-16 pr-5 text-lg focus:outline-none focus:border-blue-500" placeholder="请输入验证码">
+                                </div>
+                                <button class="bg-blue-50 text-blue-600 text-lg font-medium rounded-xl px-6 py-4 min-w-40 hover:bg-blue-100 transition shadow-sm">
+                                    获取验证码
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- 用户协议 -->
+                        <div class="flex items-start space-x-4 mt-3">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-6 h-6 border-2 border-slate-300 rounded flex items-center justify-center">
+                                    <div class="w-3 h-3 bg-blue-500 rounded"></div>
+                                </div>
+                            </div>
+                            <div class="text-lg text-slate-600">
+                                我已阅读并同意 <span class="text-blue-600">《用户协议》</span>和<span class="text-blue-600">《隐私政策》</span>
+                            </div>
+                        </div>
+                        
+                        <!-- 登录按钮 -->
+                        <button class="w-full bg-blue-500 hover:bg-blue-600 text-white text-xl font-medium rounded-xl py-4 transition shadow-md">
+                            登录
+                        </button>
+                    </div>
+                    
+                    <!-- 登录过程 -->
+                    <div class="glass-effect rounded-2xl p-8 space-y-6 shadow-md mx-4">
+                        <div class="text-xl font-medium text-slate-700">登录过程</div>
+                        
+                        <div class="space-y-4">
+                            <!-- 登录步骤1 -->
+                            <div class="slide-in flex items-center space-x-4">
+                                <div class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center">
+                                    <img src="https://unpkg.com/lucide-static@latest/icons/check.svg" class="w-6 h-6 text-white">
+                                </div>
+                                <span class="text-xl text-slate-700">手机号格式验证</span>
+                            </div>
+                            
+                            <!-- 登录步骤2 -->
+                            <div class="slide-in flex items-center space-x-4" style="animation-delay: 0.1s;">
+                                <div class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center">
+                                    <img src="https://unpkg.com/lucide-static@latest/icons/check.svg" class="w-6 h-6 text-white">
+                                </div>
+                                <span class="text-xl text-slate-700">获取短信验证码</span>
+                            </div>
+                            
+                            <!-- 登录步骤3 -->
+                            <div class="slide-in flex items-center space-x-4" style="animation-delay: 0.2s;">
+                                <div class="w-10 h-10 rounded-full bg-slate-300 flex items-center justify-center">
+                                    <div class="w-3 h-3 bg-slate-500 rounded-full"></div>
+                                </div>
+                                <span class="text-xl text-slate-600">验证码校验</span>
+                            </div>
+                            
+                            <!-- 登录步骤4 -->
+                            <div class="slide-in flex items-center space-x-4 opacity-50" style="animation-delay: 0.3s;">
+                                <div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center">
+                                    <div class="w-3 h-3 bg-slate-400 rounded-full"></div>
+                                </div>
+                                <span class="text-xl text-slate-500">登录请求发送</span>
+                            </div>
+                            
+                            <!-- 登录步骤5 -->
+                            <div class="slide-in flex items-center space-x-4 opacity-50" style="animation-delay: 0.4s;">
+                                <div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center">
+                                    <div class="w-3 h-3 bg-slate-400 rounded-full"></div>
+                                </div>
+                                <span class="text-xl text-slate-500">获取用户信息</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 其他登录方式 -->
+                    <div class="glass-effect rounded-2xl p-8 mx-4 shadow-md">
+                        <div class="text-xl font-medium text-slate-700 mb-6">其他登录方式</div>
+                        
+                        <div class="flex justify-around">
+                            <!-- 邮箱登录 -->
+                            <div class="flex flex-col items-center">
+                                <div class="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mb-3">
+                                    <img src="https://unpkg.com/lucide-static@latest/icons/mail.svg" class="w-8 h-8 text-slate-600">
+                                </div>
+                                <span class="text-lg text-slate-600">邮箱</span>
+                            </div>
+                            
+                            <!-- 华为账号 -->
+                            <div class="flex flex-col items-center">
+                                <div class="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mb-3">
+                                    <img src="https://unpkg.com/lucide-static@latest/icons/layout-dashboard.svg" class="w-8 h-8 text-slate-600">
+                                </div>
+                                <span class="text-lg text-slate-600">华为账号</span>
+                            </div>
+                            
+                            <!-- 游客登录 -->
+                            <div class="flex flex-col items-center">
+                                <div class="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mb-3">
+                                    <img src="https://unpkg.com/lucide-static@latest/icons/user.svg" class="w-8 h-8 text-slate-600">
+                                </div>
+                                <span class="text-lg text-slate-600">游客</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 精简日志区域 - 高度占屏幕的17.5% -->
+                <div class="log-panel w-full rounded-t-3xl overflow-y-auto p-6 custom-scrollbar" style="height: 336px;">
+                    <div class="log-item text-green-400 text-lg">[10:36:02] [INFO] 用户选择手机号登录方式</div>
+                    <div class="log-item text-green-400 text-lg" style="animation-delay: 0.1s;">[10:36:03] [INFO] 加载手机号登录界面</div>
+                    <div class="log-item text-green-400 text-lg" style="animation-delay: 0.2s;">[10:36:05] [INFO] 检测登录渠道: 华为应用市场</div>
+                    <div class="log-item text-green-400 text-lg" style="animation-delay: 0.3s;">[10:36:07] [INFO] 用户输入手机号: 138****6666</div>
+                    <div class="log-item text-yellow-400 text-lg" style="animation-delay: 0.4s;">[10:36:09] [WARN] 等待用户输入验证码</div>
+                    <div class="log-item text-green-400 text-lg" style="animation-delay: 0.5s;">[10:36:11] [INFO] 准备发送验证码请求...</div>
+                </div>
+                
+                <!-- 尺寸标注 - 在实际应用中可以移除 -->
+                <div class="absolute top-2 left-2 bg-black/70 text-white px-3 py-1.5 rounded-lg text-sm font-mono">
+                    1080 × 1920
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 设计说明 -->
+    <div class="fixed bottom-4 right-4 bg-white p-4 rounded-xl shadow-lg max-w-sm">
+        <h3 class="text-sm font-bold text-slate-800 mb-2">1080*1920登录界面说明</h3>
+        <ul class="text-xs text-slate-600 space-y-1">
+            <li>• 顶部导航：67px高 (3.5%)</li>
+            <li>• 主内容区：1516px高 (79%)</li>
+            <li>• 日志区域：336px高 (17.5%)</li>
+            <li>• 登录方式卡片：180px高，带选中效果</li>
+            <li>• 输入框高度：56px (py-4)</li>
+            <li>• 按钮高度：56px</li>
+            <li>• 字体尺寸：标题24px，内容18-20px</li>
+        </ul>
+    </div>
+</body>
+</html>
