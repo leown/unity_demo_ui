@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDK测试Demo - 1080*1920分辨率功能列表界面</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        .light-glass-effect {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        .log-panel {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        
+        .custom-input {
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+        
+        .custom-input:focus {
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.3s forwards;
+        }
+        
+        .log-item {
+            animation: fadeIn 0.3s forwards;
+        }
+        
+        /* 自定义滚动条 */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* 功能卡片效果 */
+        .feature-card {
+            transition: all 0.2s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 特定设备尺寸 */
+        .phone-mock {
+            width: 1080px;
+            height: 1920px;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 min-h-screen flex justify-center py-8">
+    <div class="phone-mock bg-gradient-to-br from-slate-50 to-blue-50 rounded-3xl overflow-hidden relative flex flex-col shadow-2xl border-8 border-slate-300">
+        <!-- 紧凑顶部导航栏 - 高度调整为屏幕的3.5% -->
+        <div class="light-glass-effect w-full px-8 py-3 border-b border-slate-200 flex justify-between items-center" style="height: 67px;">
+            <div class="flex items-center space-x-4">
+                <img src="https://unpkg.com/lucide-static@latest/icons/layers.svg" class="w-8 h-8 text-blue-600">
+                <h1 class="text-2xl font-bold text-slate-800">功能列表</h1>
+            </div>
+            <div class="text-lg text-slate-500">v1.0.0</div>
+        </div>
+        
+        <!-- 用户信息条 -->
+        <div class="light-glass-effect w-full px-8 py-4 border-b border-slate-200 flex justify-between items-center">
+            <div class="flex items-center space-x-5">
+                <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
+                    <img src="https://unpkg.com/lucide-static@latest/icons/user.svg" class="w-7 h-7 text-blue-600">
+                </div>
+                <div>
+                    <div class="text-xl font-medium text-slate-800">测试用户_9527</div>
+                    <div class="text-lg text-slate-500">UID: 10086123456</div>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <div class="px-4 py-1.5 bg-green-100 rounded-full">
+                    <span class="text-lg font-medium text-green-600">已登录</span>
+                </div>
+                <button class="text-lg text-blue-600 font-medium">退出登录</button>
+            </div>
+        </div>
+        
+        <!-- 主要内容区 - 占据屏幕的79%-用户信息条高度 -->
+        <div class="flex-1 flex flex-col p-6 space-y-6 overflow-y-auto" style="height: calc(1516px - 64px);">
+            <!-- 功能卡片网格 -->
+            <div class="grid grid-cols-2 gap-6 mx-4">
+                <!-- 分享功能卡片 -->
+                <div class="feature-card glass-effect rounded-2xl p-6 shadow-md cursor-pointer">
+                    <div class="w-16 h-16 rounded-xl bg-blue-100 flex items-center justify-center mb-4">
+                        <img src="https://unpkg.com/lucide-static@latest/icons/share.svg" class="w-9 h-9 text-blue-600">
+                    </div>
+                    <div class="text-xl font-medium text-slate-800 mb-2">分享功能</div>
+                    <div class="text-lg text-slate-500">测试分享SDK接口</div>
+                </div>
+                
+                <!-- 支付功能卡片 -->
+                <div class="feature-card glass-effect rounded-2xl p-6 shadow-md cursor-pointer">
+                    <div class="w-16 h-16 rounded-xl bg-green-100 flex items-center justify-center mb-4">
+                        <img src="https://unpkg.com/lucide-static@latest/icons/credit-card.svg" class="w-9 h-9 text-green-600">
+                    </div>
+                    <div class="text-xl font-medium text-slate-800 mb-2">支付功能</div>
+                    <div class="text-lg text-slate-500">测试支付SDK接口</div>
+                </div>
+                
+                <!-- 打点功能卡片 -->
+                <div class="feature-card glass-effect rounded-2xl p-6 shadow-md cursor-pointer">
+                    <div class="w-16 h-16 rounded-xl bg-purple-100 flex items-center justify-center mb-4">
+                        <img src="https://unpkg.com/lucide-static@latest/icons/bar-chart.svg" class="w-9 h-9 text-purple-600">
+                    </div>
+                    <div class="text-xl font-medium text-slate-800 mb-2">打点功能</div>
+                    <div class="text-lg text-slate-500">测试数据埋点接口</div>
+                </div>
+                
+                <!-- 广告功能卡片 -->
+                <div class="feature-card glass-effect rounded-2xl p-6 shadow-md cursor-pointer">
+                    <div class="w-16 h-16 rounded-xl bg-orange-100 flex items-center justify-center mb-4">
+                        <img src="https://unpkg.com/lucide-static@latest/icons/layout.svg" class="w-9 h-9 text-orange-600">
+                    </div>
+                    <div class="text-xl font-medium text-slate-800 mb-2">广告功能</div>
+                    <div class="text-lg text-slate-500">测试广告SDK接口</div>
+                </div>
+                
+                <!-- 账号功能卡片 -->
+                <div class="feature-card glass-effect rounded-2xl p-6 shadow-md cursor-pointer">
+                    <div class="w-16 h-16 rounded-xl bg-teal-100 flex items-center justify-center mb-4">
+                        <img src="https://unpkg.com/lucide-static@latest/icons/user-cog.svg" class="w-9 h-9 text-teal-600">
+                    </div>
+                    <div class="text-xl font-medium text-slate-800 mb-2">账号功能</div>
+                    <div class="text-lg text-slate-500">账号相关接口测试</div>
+                </div>
+                
+                <!-- 系统功能卡片 -->
+                <div class="feature-card glass-effect rounded-2xl p-6 shadow-md cursor-pointer">
+                    <div class="w-16 h-16 rounded-xl bg-rose-100 flex items-center justify-center mb-4">
+                        <img src="https://unpkg.com/lucide-static@latest/icons/settings.svg" class="w-9 h-9 text-rose-600">
+                    </div>
+                    <div class="text-xl font-medium text-slate-800 mb-2">系统功能</div>
+                    <div class="text-lg text-slate-500">测试系统相关接口</div>
+                </div>
+            </div>
+            
+            <!-- 配置信息卡片 -->
+            <div class="glass-effect rounded-2xl p-6 mx-4 shadow-md">
+                <div class="text-xl font-medium text-slate-700 mb-4">配置信息</div>
+                
+                <div class="grid grid-cols-2 gap-y-4 gap-x-8">
+                    <div class="flex justify-between items-center">
+                        <div class="text-lg text-slate-500">应用版本</div>
+                        <div class="text-lg font-medium text-slate-700">1.0.0 (100)</div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center">
+                        <div class="text-lg text-slate-500">SDK版本</div>
+                        <div class="text-lg font-medium text-slate-700">2.5.0</div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center">
+                        <div class="text-lg text-slate-500">渠道</div>
+                        <div class="text-lg font-medium text-slate-700">华为应用市场</div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center">
+                        <div class="text-lg text-slate-500">设备ID</div>
+                        <div class="text-lg font-medium text-slate-700">HW86390***12</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 精简日志区域 - 高度占屏幕的17.5% -->
+        <div class="log-panel w-full rounded-t-3xl overflow-y-auto p-6 custom-scrollbar" style="height: 336px;">
+            <div class="log-item text-green-400 text-lg">[10:39:35] [INFO] 登录成功，用户ID: 10086123456</div>
+            <div class="log-item text-green-400 text-lg" style="animation-delay: 0.1s;">[10:39:36] [INFO] 获取用户信息成功</div>
+            <div class="log-item text-green-400 text-lg" style="animation-delay: 0.2s;">[10:39:37] [INFO] 加载功能列表</div>
+            <div class="log-item text-green-400 text-lg" style="animation-delay: 0.3s;">[10:39:38] [INFO] 检测可用功能模块: 6个</div>
+            <div class="log-item text-green-400 text-lg" style="animation-delay: 0.4s;">[10:39:40] [INFO] 缓存用户信息完成</div>
+            <div class="log-item text-green-400 text-lg" style="animation-delay: 0.5s;">[10:39:42] [INFO] 功能模块加载完成</div>
+            <div class="log-item text-yellow-400 text-lg" style="animation-delay: 0.6s;">[10:39:45] [WARN] 部分模块可能需要更新配置</div>
+            <div class="log-item text-green-400 text-lg" style="animation-delay: 0.7s;">[10:40:00] [INFO] 等待用户操作...</div>
+        </div>
+        
+        <!-- 成功登录提示层 - 动画展示后消失 -->
+        <div class="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm" style="animation: fadeOut 1s ease-out 2s forwards;">
+            <div class="bg-white rounded-3xl p-10 shadow-2xl flex flex-col items-center" style="animation: scaleIn 0.5s ease-out forwards;">
+                <div class="w-24 h-24 rounded-full bg-green-100 flex items-center justify-center mb-6">
+                    <img src="https://unpkg.com/lucide-static@latest/icons/check.svg" class="w-14 h-14 text-green-600">
+                </div>
+                <h2 class="text-3xl font-bold text-slate-800 mb-3">登录成功</h2>
+                <p class="text-xl text-slate-600">欢迎回来，测试用户_9527</p>
+            </div>
+        </div>
+        
+        <style>
+            @keyframes fadeOut {
+                from { opacity: 1; }
+                to { opacity: 0; visibility: hidden; }
+            }
+            
+            @keyframes scaleIn {
+                from { transform: scale(0.8); opacity: 0; }
+                to { transform: scale(1); opacity: 1; }
+            }
+        </style>
+        
+        <!-- 尺寸标注 - 在实际应用中可以移除 -->
+        <div class="absolute top-2 left-2 bg-black/70 text-white px-3 py-1.5 rounded-lg text-sm font-mono">
+            1080 × 1920
+        </div>
+    </div>
+</body>
+</html>
