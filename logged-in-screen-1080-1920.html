@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDK测试Demo - 1080*1920分辨率登录成功后功能列表</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        .light-glass-effect {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        .log-panel {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        
+        .custom-input {
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+        
+        .custom-input:focus {
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.3s forwards;
+        }
+        
+        .log-item {
+            animation: fadeIn 0.3s forwards;
+        }
+        
+        /* 自定义滚动条 */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* 功能模块卡片效果 */
+        .feature-card {
+            transition: all 0.2s ease;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.6));
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 20px rgba(59, 130, 246, 0.15);
+        }
+        
+        .feature-card.blue {
+            border-left: 6px solid #3B82F6;
+        }
+        
+        .feature-card.green {
+            border-left: 6px solid #10B981;
+        }
+        
+        .feature-card.purple {
+            border-left: 6px solid #8B5CF6;
+        }
+        
+        .feature-card.orange {
+            border-left: 6px solid #F59E0B;
+        }
+        
+        .feature-card.teal {
+            border-left: 6px solid #14B8A6;
+        }
+        
+        .feature-card.rose {
+            border-left: 6px solid #F43F5E;
+        }
+        
+        /* 特定设备尺寸 */
+        .phone-mock {
+            width: 1080px;
+            height: 1920px;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 min-h-screen">
+    <div class="container mx-auto py-8 flex justify-center">
+        <!-- 登录成功后功能列表界面 - 1080*1920分辨率 -->
+        <div class="phone-mock bg-gradient-to-br from-slate-50 to-blue-50 rounded-3xl overflow-hidden relative flex flex-col shadow-2xl border-8 border-slate-300">
+            <!-- 紧凑顶部导航栏 - 高度调整为屏幕的3.5% -->
+            <div class="light-glass-effect w-full px-8 py-3 border-b border-slate-200 flex justify-between items-center" style="height: 67px;">
+                <div class="flex items-center space-x-4">
+                    <h1 class="text-2xl font-bold text-slate-800">功能列表</h1>
+                </div>
+                <div class="text-lg text-slate-500">v1.0.0</div>
+            </div>
+            
+            <!-- 用户信息条 - 添加登录成功后的用户信息展示 -->
+            <div class="light-glass-effect w-full px-8 py-4 border-b border-slate-200 flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <div class="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center">
+                        <span class="text-2xl font-bold text-blue-600">测</span>
+                    </div>
+                    <div>
+                        <div class="text-xl font-medium text-slate-800">测试用户_9527</div>
+                        <div class="text-lg text-slate-500">UID: 10086123456</div>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <div class="px-4 py-1.5 rounded-full bg-green-100 flex items-center space-x-2">
+                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        <span class="text-lg font-medium text-green-700">已登录</span>
+                    </div>
+                    <button class="text-lg text-blue-600">退出登录</button>
+                </div>
+            </div>
+            
+            <!-- 主要内容区 - 占据屏幕的79% -->
+            <div class="flex-1 flex flex-col p-6 space-y-6 overflow-y-auto" style="height: 1449px;">
+                <!-- 功能模块列表 - 不使用图标 -->
+                <div class="space-y-6 px-4">
+                    <div class="text-xl font-medium text-slate-700">功能模块</div>
+                    
+                    <div class="space-y-5">
+                        <!-- 分享功能 -->
+                        <div class="feature-card blue rounded-2xl p-6 shadow-md cursor-pointer">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <div class="text-xl font-semibold text-slate-800">分享功能</div>
+                                    <div class="text-lg text-slate-500 mt-1">测试分享SDK接口</div>
+                                </div>
+                                <div class="px-4 py-1.5 rounded-lg bg-blue-100 text-blue-700 text-lg">可用</div>
+                            </div>
+                        </div>
+                        
+                        <!-- 支付功能 -->
+                        <div class="feature-card green rounded-2xl p-6 shadow-md cursor-pointer">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <div class="text-xl font-semibold text-slate-800">支付功能</div>
+                                    <div class="text-lg text-slate-500 mt-1">测试支付SDK接口</div>
+                                </div>
+                                <div class="px-4 py-1.5 rounded-lg bg-green-100 text-green-700 text-lg">可用</div>
+                            </div>
+                        </div>
+                        
+                        <!-- 打点功能 -->
+                        <div class="feature-card purple rounded-2xl p-6 shadow-md cursor-pointer">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <div class="text-xl font-semibold text-slate-800">打点功能</div>
+                                    <div class="text-lg text-slate-500 mt-1">测试数据埋点接口</div>
+                                </div>
+                                <div class="px-4 py-1.5 rounded-lg bg-purple-100 text-purple-700 text-lg">可用</div>
+                            </div>
+                        </div>
+                        
+                        <!-- 广告功能 -->
+                        <div class="feature-card orange rounded-2xl p-6 shadow-md cursor-pointer">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <div class="text-xl font-semibold text-slate-800">广告功能</div>
+                                    <div class="text-lg text-slate-500 mt-1">测试广告SDK接口</div>
+                                </div>
+                                <div class="px-4 py-1.5 rounded-lg bg-orange-100 text-orange-700 text-lg">可用</div>
+                            </div>
+                        </div>
+                        
+                        <!-- 账号功能 -->
+                        <div class="feature-card teal rounded-2xl p-6 shadow-md cursor-pointer">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <div class="text-xl font-semibold text-slate-800">账号功能</div>
+                                    <div class="text-lg text-slate-500 mt-1">账号相关接口测试</div>
+                                </div>
+                                <div class="px-4 py-1.5 rounded-lg bg-teal-100 text-teal-700 text-lg">可用</div>
+                            </div>
+                        </div>
+                        
+                        <!-- 系统功能 -->
+                        <div class="feature-card rose rounded-2xl p-6 shadow-md cursor-pointer">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <div class="text-xl font-semibold text-slate-800">系统功能</div>
+                                    <div class="text-lg text-slate-500 mt-1">测试系统相关接口</div>
+                                </div>
+                                <div class="px-4 py-1.5 rounded-lg bg-rose-100 text-rose-700 text-lg">可用</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 配置信息 -->
+                <div class="glass-effect rounded-2xl p-6 mx-4 shadow-md">
+                    <div class="text-xl font-medium text-slate-700 mb-4">配置信息</div>
+                    
+                    <div class="grid grid-cols-2 gap-y-3 gap-x-4">
+                        <div class="text-lg text-slate-500">应用版本</div>
+                        <div class="text-lg text-slate-700">1.0.0 (100)</div>
+                        
+                        <div class="text-lg text-slate-500">SDK版本</div>
+                        <div class="text-lg text-slate-700">2.5.0</div>
+                        
+                        <div class="text-lg text-slate-500">渠道</div>
+                        <div class="text-lg text-slate-700">华为应用市场</div>
+                        
+                        <div class="text-lg text-slate-500">设备ID</div>
+                        <div class="text-lg text-slate-700">HW86390***12</div>
+                        
+                        <div class="text-lg text-slate-500">登录时间</div>
+                        <div class="text-lg text-slate-700">2025-03-17 10:46:23</div>
+                    </div>
+                </div>
+                
+                <!-- 操作提示 -->
+                <div class="bg-blue-50 rounded-2xl p-6 mx-4">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+                            <span class="text-2xl font-bold text-blue-600">i</span>
+                        </div>
+                        <div>
+                            <p class="text-xl font-medium text-blue-700">使用提示</p>
+                            <p class="text-lg text-slate-700 mt-2">点击功能卡片进入对应功能测试页面。所有测试操作将记录在日志中，供分析使用。</p>
+                            <p class="text-lg text-blue-600 mt-2">近期更新: 增加了多渠道登录支持</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 精简日志区域 - 高度占屏幕的17.5% -->
+            <div class="log-panel w-full rounded-t-3xl overflow-y-auto p-6 custom-scrollbar" style="height: 336px;">
+                <div class="log-item text-green-400 text-lg">[10:46:20] [INFO] 登录验证成功</div>
+                <div class="log-item text-green-400 text-lg" style="animation-delay: 0.1s;">[10:46:21] [INFO] 获取用户信息: 测试用户_9527 (UID: 10086123456)</div>
+                <div class="log-item text-green-400 text-lg" style="animation-delay: 0.2s;">[10:46:22] [INFO] 加载用户配置和权限</div>
+                <div class="log-item text-green-400 text-lg" style="animation-delay: 0.3s;">[10:46:23] [INFO] 登录完成，跳转至功能列表页面</div>
+                <div class="log-item text-green-400 text-lg" style="animation-delay: 0.4s;">[10:46:24] [INFO] 加载功能模块列表</div>
+                <div class="log-item text-green-400 text-lg" style="animation-delay: 0.5s;">[10:46:25] [INFO] 获取系统信息和配置</div>
+                <div class="log-item text-green-400 text-lg" style="animation-delay: 0.6s;">[10:46:26] [INFO] 检测到 6 个可用功能模块</div>
+                <div class="log-item text-green-400 text-lg" style="animation-delay: 0.7s;">[10:46:27] [INFO] 当前渠道: 华为应用市场</div>
+                <div class="log-item text-green-400 text-lg" style="animation-delay: 0.8s;">[10:46:28] [INFO] 页面加载完成，等待用户操作</div>
+            </div>
+            
+            <!-- 尺寸标注 - 在实际应用中可以移除 -->
+            <div class="absolute top-2 left-2 bg-black/70 text-white px-3 py-1.5 rounded-lg text-sm font-mono">
+                1080 × 1920
+            </div>
+            
+            <!-- 登录提示覆盖层 - 在实际应用中这会随时间消失 -->
+            <div class="absolute top-24 right-6 bg-green-100 px-5 py-3 rounded-xl shadow-lg animate-bounce">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center">
+                        <span class="text-lg font-bold text-white">✓</span>
+                    </div>
+                    <div>
+                        <p class="text-lg font-medium text-green-800">登录成功</p>
+                        <p class="text-sm text-green-600">欢迎回来，测试用户_9527</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 设计说明 -->
+    <div class="fixed bottom-4 right-4 bg-white p-4 rounded-xl shadow-lg max-w-md">
+        <h3 class="text-sm font-bold text-slate-800 mb-2">登录成功后功能列表界面说明</h3>
+        <ul class="text-xs text-slate-600 space-y-1">
+            <li>• 顶部添加了用户信息条，展示登录状态和用户信息</li>
+            <li>• 功能模块以卡片形式呈现，不使用图标，左侧彩色边框识别不同功能</li>
+            <li>• 所有功能显示为"可用"状态，对比未登录时的"未登录"状态</li>
+            <li>• 右上角有登录成功的提示，设计为会在几秒后自动消失</li>
+            <li>• 每个功能卡片有悬停效果，点击可进入相应功能测试页面</li>
+            <li>• 日志区展示了登录成功后的一系列操作记录</li>
+            <li>• 保持了整体设计语言的一致性，玻璃拟态效果贯穿</li>
+        </ul>
+    </div>
+</body>
+</html>
